@@ -25,7 +25,7 @@ export default function DentalApp(){
   useEffect(()=>{fetchA()},[]);
 
   const doBook=async()=>{if(!bk.name||!bk.phone||!bk.service||!bk.date||!bk.time)return;setBkL(true);
-    try{const r=await fetch('/api/appointments',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(bk)});if(r.ok){setAppts(p=>[...p,await r.json()]);setBkOk(true);setTimeout(()=>{setBkOk(false);setBk({name:'',phone:'',service:'',date:'',time:''})},3000)}}catch(e){console.error(e)}finally{setBkL(false)}};
+    try{const r=await fetch('/api/appointments',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(bk)});if(r.ok){const n=await r.json();setAppts(p=>[...p,n]);setBkOk(true);setTimeout(()=>{setBkOk(false);setBk({name:'',phone:'',service:'',date:'',time:''})},3000)}}catch(e){console.error(e)}finally{setBkL(false)}};
 
   const updS=async(id,status)=>{try{const r=await fetch('/api/appointments',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({id,status})});if(r.ok){const u=await r.json();setAppts(p=>p.map(a=>a.id===u.id?u:a))}}catch(e){console.error(e)}};
 
